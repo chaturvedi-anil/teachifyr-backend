@@ -58,7 +58,6 @@ const signUp = async (req, res) => {
 
     } catch (error) {
         return res.status(500).json({
-                message: "Internal Server Error!",
                 error: error.message
             });
     }
@@ -116,7 +115,6 @@ const signIn = async (req, res) => {
 
     } catch (error) {
         return res.status(500).json({
-            message: "Internal Server Error!",
             error: error.message
         });
     }
@@ -145,7 +143,6 @@ const profile = async (req, res) => {
         
     } catch (error) {
         return res.status(500).json({
-            message: "Internal Server Error!",
             error: error.message
         });
     }
@@ -199,7 +196,6 @@ const createCourse = async (req, res) => {
         }
     } catch (error) {
         return res.status(500).json({
-            message: "Internal Server Error!",
             error: error.message
         });
     }
@@ -210,7 +206,6 @@ const deleteCourse = (req, res) => {
         
     } catch (error) {
         return res.status(500).json({
-            message: "Internal Server Error!",
             error: error.message
         });
     }
@@ -221,7 +216,6 @@ const addCourseContent = (req, res) => {
         
     } catch (error) {
         return res.status(500).json({
-            message: "Internal Server Error!",
             error: error.message
         });
     }

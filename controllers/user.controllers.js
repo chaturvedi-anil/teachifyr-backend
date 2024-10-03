@@ -2,6 +2,7 @@ const {z} = require('zod');
 const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const Users = require('../models/users.model');
+const Purchase = require('../models/purchase.model.js');
 const { passwordRegex } = require("../constant.js");
  
 const signUp = async (req, res) => {
@@ -56,7 +57,6 @@ const signUp = async (req, res) => {
 
     } catch (error) {
         return res.status(500).json({
-                message: "Internal Server Error!",
                 error: error.message
             });
     }
@@ -114,7 +114,6 @@ const signIn = async (req, res) => {
 
     } catch (error) {
         return res.status(500).json({
-            message: "Internal Server Error!",
             error: error.message
         });
     }
@@ -143,27 +142,61 @@ const profile = async (req, res) => {
         
     } catch (error) {
         return res.status(500).json({
-            message: "Internal Server Error!",
             error: error.message
         });
     }
 }
 
-const purchaseCourse = (req, res) => {
+const purchaseCourse = async (req, res) => {
     try {
-        const { id, courseId, isPurchased } = req.body;
+        const { id, courseId } = req.body;
         
+        const isPurchased = await Purchase.findOne({userId: id, courseId: courseId});
+
+        if(isPurchased){
+            return res.status(400).json({
+                message: "You have already purchased this course!",
+            });
+
+        } else {
+            const newPurchased = await Purchase.create({
+                userId: id,
+                courseId: courseId
+            });
+
+            if(newPurchased){
+                return res.status(200).json({
+                    message: "You have successfully purchased this course!"
+                });
+            }
+        }
 
     } catch (error) {
-        
+        return res.status(500).json({
+            error: error.message
+        });
     }
 }
 
-const listOfPurchaseCourses = (req, res) => {
-    try {
-    
-    } catch (error) {
+const listOfPurchaseCourses = async (req, res) => {
+    try {   
+        const { id } = req.body;
+
+        const listOfCourses = await Purchase.find({userId: id});
         
+        if (listOfCourses) {
+            return res.status(200).json({
+                data: listOfCourses
+            })
+        } else {
+            return res.status(200).json({
+                message: "You did not purchase any courses!"
+            })
+        }
+    } catch (error) {
+         return res.status(500).json({
+            error: error.message
+        });
     }
 }
 
