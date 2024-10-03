@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require("jsonwebtoken");
 const Creators = require('../models/creator.model.js');
 const Courses = require('../models/course.model.js');
+const Purchase = require('../models/purchase.model.js');
 const { passwordRegex } = require("../constant.js");
 
  
@@ -201,8 +202,21 @@ const createCourse = async (req, res) => {
     }
 }
 
-const deleteCourse = (req, res) => {
+const deleteCourse = async (req, res) => {
     try {
+        const courseId = req.params.courseId;
+
+        const deletedCourse = await Courses.findByIdAndDelete(courseId);
+        
+
+        if (!deletedCourse) {
+            return res.status(404).json({ message: 'Course not found' });
+        } else {
+            const deletedPurchased = await Purchase.deleteMany({courseId: courseId});
+
+            
+            return res.status(200).json({ message: 'Course deleted successfully', deletedPurchased: deletedPurchased, deletedCourse: deletedCourse });
+        }
         
     } catch (error) {
         return res.status(500).json({
