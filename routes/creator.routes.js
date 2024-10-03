@@ -8,8 +8,8 @@ creatorRouter.post('/signup', signUp);
 creatorRouter.post('/signin', signIn);
 creatorRouter.get('/profile', authMiddleware ,profile);
 creatorRouter.post('/new-course', authMiddleware ,createCourse);
-creatorRouter.delete('/delete-course/:id', authMiddleware, deleteCourse);
-creatorRouter.post('/add-course-content/:id', authMiddleware, addCourseContent);
+creatorRouter.delete('/delete-course/:courseId', authMiddleware, deleteCourse);
+creatorRouter.post('/add-course-content/:courseId', authMiddleware, addCourseContent);
 
 
 module.exports = creatorRouter;
