@@ -182,7 +182,12 @@ const listOfPurchaseCourses = async (req, res) => {
     try {   
         const { id } = req.body;
 
-        const listOfCourses = await Purchase.find({userId: id});
+        const listOfCourses = await Purchase.find({userId: id})
+            .populate('courseId')
+            .exec();
+
+        console.log("listOfCourses : ", listOfCourses);
+        
         
         if (listOfCourses) {
             return res.status(200).json({

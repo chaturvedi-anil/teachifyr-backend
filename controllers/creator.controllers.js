@@ -202,6 +202,13 @@ const createCourse = async (req, res) => {
     }
 }
 
+const updateCourse = async (req, res) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}
 const deleteCourse = async (req, res) => {
     try {
         const courseId = req.params.courseId;
@@ -237,5 +244,5 @@ const addCourseContent = (req, res) => {
 
 
 module.exports = {
-    signUp, signIn, profile, createCourse, deleteCourse, addCourseContent
+    signUp, signIn, profile, createCourse, deleteCourse, updateCourse, addCourseContent
 }
