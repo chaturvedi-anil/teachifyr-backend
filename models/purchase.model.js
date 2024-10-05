@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const purchaseSchema = mongoose.Schema({
     courseId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Course"
+        ref: "Courses"
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
